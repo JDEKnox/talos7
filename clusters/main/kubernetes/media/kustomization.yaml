@@ -5,3 +5,5 @@ resources:
   - pvc.yaml
   - qbit-proxy/ks.yaml
   - qbittorrent/ks.yaml
+  - prowlarr/ks.yaml
+  - unpackerr/ks.yaml
