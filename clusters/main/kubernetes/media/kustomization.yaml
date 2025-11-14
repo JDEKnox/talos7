@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - pvc.yaml
   - qbit-proxy/ks.yaml
+  - qbittorrent/ks.yaml
