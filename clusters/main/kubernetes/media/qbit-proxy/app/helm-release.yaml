@@ -192,7 +192,7 @@ spec:
       QBT_USERNAME: "${ADMIN}"
       QBT_PASSWORD: "${ADMIN_PASSWORD}"
     addons:
-      vpn:
+      gluetun:
         type: gluetun
         killSwitch: true
         excludedNetworks_IPv4:
