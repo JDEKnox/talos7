@@ -7,3 +7,5 @@ resources:
   - qbittorrent/ks.yaml
   - prowlarr/ks.yaml
   - unpackerr/ks.yaml
+  - radarr/ks.yaml
+  - sonarr/ks.yaml
