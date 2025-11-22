@@ -193,31 +193,29 @@ spec:
       QBT_PASSWORD: "${ADMIN_PASSWORD}"
     addons:
       gluetun:
-        type: gluetun
-        killSwitch: true
-        excludedNetworks_IPv4:
-        - 192.168.0.0/16
-        env:
-          VPN_TYPE: wireguard
-          VPN_SERVICE_PROVIDER: protonvpn
-          #WIREGUARD_ENDPOINT_IP: ${WG_ENDPOINT_IP}
-          #WIREGUARD_ENDPOINT_PORT: ${WG_ENDPOINT_PORT}
-          #WIREGUARD_PUBLIC_KEY: ${WG_PUBLIC_KEY}
-          WIREGUARD_PRIVATE_KEY: ${WG_PRIVATE_KEY}
-          #FIREWALL_VPN_INPUT_PORTS: ${WG_FIREWALL_INPUT_PORT}
-          #WIREGUARD_ADDRESSES: ${WG_ADDRESSES}
-          HTTPPROXY: "on"
-          FIREWALL_INPUT_PORTS: 10095,8888
-          SERVER_COUNTRIES: ${SERVER_COUNTRIES}
-          #SERVER_CITIES: ${SERVER_CITIES}
-          #SERVER_HOSTNAMES: ${SERVER_HOSTNAMES}
-          HTTPPROXY_LOG: "on"
-          HTTPPROXY_LISTENING_ADDRESS: :8888
-          #VPN_PORT_FORWARDING_UP_COMMAND: ${VPN_UP_COMMAND}
-          VPN_PORT_FORWARDING: "on"
-          PORT_FORWARD_ONLY: "on"
-          #VPN_PORT_FORWARDING_STATUS_FILE: /tmp/gluetun/forwarded_port
-          # VPN_PORT_FORWARDING_LISTENING_PORT: 6881
+        enabled: true
+        container:
+          env:
+            VPN_TYPE: wireguard
+            VPN_SERVICE_PROVIDER: protonvpn
+            #WIREGUARD_ENDPOINT_IP: ${WG_ENDPOINT_IP}
+            #WIREGUARD_ENDPOINT_PORT: ${WG_ENDPOINT_PORT}
+            #WIREGUARD_PUBLIC_KEY: ${WG_PUBLIC_KEY}
+            WIREGUARD_PRIVATE_KEY: ${WG_PRIVATE_KEY}
+            #FIREWALL_VPN_INPUT_PORTS: ${WG_FIREWALL_INPUT_PORT}
+            #WIREGUARD_ADDRESSES: ${WG_ADDRESSES}
+            HTTPPROXY: "on"
+            FIREWALL_INPUT_PORTS: 10095,8888
+            SERVER_COUNTRIES: ${SERVER_COUNTRIES}
+            #SERVER_CITIES: ${SERVER_CITIES}
+            #SERVER_HOSTNAMES: ${SERVER_HOSTNAMES}
+            HTTPPROXY_LOG: "on"
+            HTTPPROXY_LISTENING_ADDRESS: :8888
+            #VPN_PORT_FORWARDING_UP_COMMAND: ${VPN_UP_COMMAND}
+            VPN_PORT_FORWARDING: "on"
+            PORT_FORWARD_ONLY: "on"
+            #VPN_PORT_FORWARDING_STATUS_FILE: /tmp/gluetun/forwarded_port
+            # VPN_PORT_FORWARDING_LISTENING_PORT: 6881
     ingress:
       main:
         enabled: true
