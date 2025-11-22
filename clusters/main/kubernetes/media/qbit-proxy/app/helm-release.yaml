@@ -195,7 +195,7 @@ spec:
       proxy:
         enabled: true
         ports:
-          gluetun:
+          gluetun2:
             enabled: true
             port: 8888
             protocol: "http"
