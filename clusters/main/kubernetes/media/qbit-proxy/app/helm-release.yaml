@@ -195,7 +195,7 @@ spec:
       proxy:
         enabled: true
         ports:
-          gluetun2:
+          gluetun:
             enabled: true
             port: 8888
             protocol: "http"
@@ -205,6 +205,9 @@ spec:
       gluetun:
         enabled: true
         container:
+          resources:
+            limits:
+              truecharts.org/tun: 1
           env:
             VPN_TYPE: wireguard
             VPN_SERVICE_PROVIDER: protonvpn
