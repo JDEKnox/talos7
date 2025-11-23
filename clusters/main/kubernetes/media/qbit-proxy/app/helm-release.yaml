@@ -216,9 +216,6 @@ spec:
         container:
           # excludedNetworks_IPv4:
           # - 192.168.0.0/16
-          resources:
-            limits:
-              truecharts.org/tun: 1
           env:
             VPN_TYPE: wireguard
             VPN_SERVICE_PROVIDER: nordvpn
