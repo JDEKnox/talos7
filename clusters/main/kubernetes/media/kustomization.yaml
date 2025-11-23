@@ -11,4 +11,3 @@ resources:
   - overseerr/ks.yaml
   - tautulli/ks.yaml
   - threadfin/ks.yaml
-  - qbit-proxy/ks.yaml
