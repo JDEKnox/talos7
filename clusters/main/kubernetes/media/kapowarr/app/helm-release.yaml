@@ -57,18 +57,18 @@ spec:
             enabled: true
             certificateIssuer: domain-0-le-prod
     persistence:
-      config:
-        enabled: true
-        volsync:
-        - name: config
-          type: restic
-          credentials: s3v3
-          dest:
-            enabled: true
-          src:
-            enabled: true
-            trigger:
-              schedule: 50 1 * * *
+      # config:
+      #   enabled: true
+      #   volsync:
+      #   - name: config
+      #     type: restic
+      #     credentials: s3v3
+      #     dest:
+      #       enabled: true
+      #     src:
+      #       enabled: true
+      #       trigger:
+      #         schedule: 50 1 * * *
       plex-media:
         enabled: true
         existingClaim: plex-media-pvc
