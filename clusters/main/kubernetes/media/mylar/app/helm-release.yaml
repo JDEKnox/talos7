@@ -1,14 +1,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: kapowarr
+  name: mylar
   namespace: media
 spec:
   interval: 5m
   chart:
     spec:
-      chart: kapowarr
-      version: 3.12.0
+      chart: mylar
+      version: 16.12.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -42,13 +42,13 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - host: kapowarr.${DOMAIN_0}
+          - host: mylar.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - kapowarr.${DOMAIN_0}
+              - mylar.${DOMAIN_0}
             clusterIssuer: domain-0-le-prod
         integrations:
           traefik:
@@ -57,18 +57,17 @@ spec:
             enabled: true
             certificateIssuer: domain-0-le-prod
     persistence:
-      # config:
-      #   enabled: true
-      #   volsync:
-      #   - name: config
-      #     type: restic
-      #     credentials: s3v3
-      #     dest:
-      #       enabled: true
-      #     src:
-      #       enabled: true
-      #       trigger:
-      #         schedule: 50 1 * * *
+      config:
+        volsync:
+        - name: config
+          type: restic
+          credentials: s3v3
+          dest:
+            enabled: true
+          src:
+            enabled: true
+            trigger:
+              schedule: 50 1 * * *
       plex-media:
         enabled: true
         existingClaim: plex-media-pvc
