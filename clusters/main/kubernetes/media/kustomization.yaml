@@ -11,5 +11,4 @@ resources:
   - overseerr/ks.yaml
   - tautulli/ks.yaml
   - threadfin/ks.yaml
-  - kapowarr/ks.yaml
   - mylar/ks.yaml
