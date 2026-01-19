@@ -5,3 +5,4 @@ resources:
   - pvc-util.yaml
   - cloudflaredns/ks.yaml
   - cyberchef/ks.yaml
+  - it-tools/ks.yaml
