@@ -67,7 +67,9 @@ spec:
               imageSelector: image
               env:
                 PORT: "{{ .Values.service.main.ports.main.port }}"
-                OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+                # OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+                OPENAI_API_BASE_URL: ${OPENAI_API_BASE_URL}
+                OPENAI_API_KEY: ${OPENAI_API_KEY}
                 WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
                 ENABLE_SIGNUP: true
                 DEFAULT_USER_ROLE: "user"
