@@ -41,6 +41,16 @@ spec:
       repository: ghcr.io/open-webui/open-webui
       pullPolicy: Always
       tag: latest@sha256:b2c83b5c7b9b244999307b4b1c0e195d41268f3d3a62b84b470c0cea5c5743fd
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+        runAsNonRoot: false
+        allowPrivilegeEscalation: true
+        privileged: true
+        UMASK: "002"
+        runAsUser: 0
+        runAsGroup: 0
+        PUID: 0
     pipelines:
       repository: ghcr.io/open-webui/pipelines
       pullPolicy: IfNotPresent
@@ -86,12 +96,31 @@ spec:
                   enabled: false
                   type: tcp
                   port: "{{ .Values.service.pipelines.ports.pipelines.port }}"
+    # ingress:
+    #   main:
+    #     enabled: true
+    #     hosts:
+    #       - host: ai.${DOMAIN_1}
+    #     integrations:
+    #       certManager:
+    #         enabled: true
+    #         certificateIssuer: domain-1-le-prod
     ingress:
       main:
         enabled: true
+        ingressClassName: internal
         hosts:
           - host: ai.${DOMAIN_1}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - ai.${DOMAIN_1}
+            clusterIssuer: domain-1-le-prod
         integrations:
+          traefik:
+            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-1-le-prod
