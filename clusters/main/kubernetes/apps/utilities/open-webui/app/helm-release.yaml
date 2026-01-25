@@ -1,0 +1,128 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: open-webui
+  namespace: utilities
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 15.24.40
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    credentials:
+      s3v3:
+        type: s3
+        url: "${S3_MINIO_URL_V2}"
+        bucket: "${S3_MINIO_BUCKET_PREFIX}-{{ .Chart.Name }}"
+        accessKey: "${S3_MINIO_KEY_ID_V2}"
+        secretKey: "${S3_MINIO_SECRET_KEY_V2}"
+        encrKey: "${S3_MINIO_SECRET_KEY_V2}"
+    image:
+      repository: ghcr.io/open-webui/open-webui
+      pullPolicy: IfNotPresent
+      tag: latest@sha256:b2c83b5c7b9b244999307b4b1c0e195d41268f3d3a62b84b470c0cea5c5743fd
+    pipelines:
+      repository: ghcr.io/open-webui/pipelines
+      pullPolicy: IfNotPresent
+      tag: main
+    portal:
+      open:
+        enabled: false
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              imageSelector: image
+              env:
+                PORT: "{{ .Values.service.main.ports.main.port }}"
+                OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+                WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
+                ENABLE_SIGNUP: true
+                DEFAULT_USER_ROLE: "user"
+      pipelines:
+        enabled: true
+        type: Deployment
+        podSpec:
+          containers:
+            pipelines:
+              primary: true
+              enabled: true
+              imageSelector: pipelines
+              resources:
+                excludeExtra: true
+              probes:
+                liveness:
+                  enabled: false
+                  type: http
+                  path: /
+                  port: "{{ .Values.service.pipelines.ports.pipelines.port }}"
+                readiness:
+                  enabled: false
+                  type: http
+                  path: /
+                  port: "{{ .Values.service.pipelines.ports.pipelines.port }}"
+                startup:
+                  enabled: false
+                  type: tcp
+                  port: "{{ .Values.service.pipelines.ports.pipelines.port }}"
+    ingress:
+      main:
+        enabled: true
+        hosts:
+          - host: ai.${DOMAIN_1}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: domain-1-le-prod
+    service:
+      main:
+        targetSelector: main
+        ports:
+          main:
+            protocol: http
+            port: 10686
+      pipelines:
+        enabled: true
+        targetSelector: pipelines
+        ports:
+          pipelines:
+            enabled: true
+            protocol: http
+            targetPort: 9099
+            port: 9099
+            targetSelector: pipelines
+    persistence:
+      data:
+        enabled: true
+        # targetSelector:
+        #   main:
+        mountPath: "/app/backend/data"
+        volsync:
+          - name: data1
+            type: restic
+            credentials: s3v3
+            dest:
+              enabled: true
+            src:
+              enabled: true
