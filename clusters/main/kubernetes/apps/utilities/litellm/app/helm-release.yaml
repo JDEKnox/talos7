@@ -54,6 +54,7 @@ spec:
               env:
                 LITELLM_MASTER_KEY: "${LITELLM_MASTER_KEY}"
                 STORE_MODEL_IN_DB: true
+                DATABASE_URL: "${LITELLM_POSTGRES_DB_URL}"
                 UI_USERNAME: "${LITELLM_UI_USERNAME}"
                 UI_PASSWORD: "${LITELLM_UI_PASSWORD}"
                 # LITELLM_CONFIG_PATH: "/app/litellm_config.yaml"
