@@ -53,7 +53,8 @@ spec:
             main:
               env:
                 LITELLM_MASTER_KEY: "${LITELLM_MASTER_KEY}"
-                LITELLM_CONFIG_PATH: "/app/litellm_config.yaml"
+                STORE_MODEL_IN_DB: true
+                # LITELLM_CONFIG_PATH: "/app/litellm_config.yaml"
     ingress:
       main:
         enabled: true
@@ -87,10 +88,10 @@ spec:
               enabled: true
             src:
               enabled: true
-      litellm-config:
-        enabled: true
-        type: configMap
-        name: litellm-config
-        subPath: litellm_config.yaml
-        mountPath: /app/litellm_config.yaml
-        readOnly: true
+      # litellm-config:
+      #   enabled: true
+      #   type: configMap
+      #   name: litellm-config
+      #   subPath: litellm_config.yaml
+      #   mountPath: /app/litellm_config.yaml
+      #   readOnly: true
