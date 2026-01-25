@@ -57,6 +57,7 @@ spec:
                 STORE_MODEL_IN_DB: true
                 UI_USERNAME: "${LITELLM_UI_USERNAME}"
                 UI_PASSWORD: "${LITELLM_UI_PASSWORD}"
+                LITELLM_MIGRATION_DIR: /config
                 # LITELLM_CONFIG_PATH: "/app/litellm_config.yaml"
     ingress:
       main:
