@@ -9,3 +9,4 @@ resources:
   - litellm/ks.yaml
   - open-webui/ks.yaml
   - syncthing/ks.yaml
+  - peppermint/ks.yaml
